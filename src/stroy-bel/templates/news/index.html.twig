@@ -1,0 +1,35 @@
+{% extends 'main.addition.html.twig' %}
+
+{% block title %}News index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="blog__wrap clearfix mt--60 xmt-30">
+                <!-- Start Single Blog -->
+                {% for news in newsList|slice(0,3) %}
+                    <div class="big-post col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                        <article class="card card-full hover-a mb-4">
+                            <div class="ratio_360-202 image-wrapper">
+                                <a href="{{ path('news') }}{{ news.id }}">
+                                    <img width="360" height="202" src="../{{ news.image }}" class="img-fluid lazy wp-post-image loaded" alt="" loading="lazy" sizes="(max-width: 360px) 100vw, 360px" data-was-processed="true">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="card-title h1-sm h3-lg">
+                                    <a href="{{ path('news') }}{{ news.id }}">{{ news.title }}</a>
+                                </h2>
+                                <div class="card-text mb-2 text-muted small">
+                                    <time class="news-date">{{ news.date|date('d-M-Y H:i:s') }}</time>
+                                    <span title="0 Comment" class="float-end"></span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div class="w-300p bg-dark vh-100">
+        <div class="w-100 text-white text-center py-5 h-55p">
+            <a href="{{ path('product_index') }}" class="w-100 h-100 text-white text-decoration-none d-flex justify-content-center align-items-center h4">Продукты</a>
+        </div>
+
+        <div class="w-100 text-white text-center py-5 h-55p">
+            <a href="{{ path('category_index') }}" class="w-100 h-100 text-white text-decoration-none d-flex justify-content-center align-items-center h4">Категории</a>
+        </div>
+        <div class="w-100 text-white text-center py-5 h-55p">
+            <a href="{{ path('news_index') }}" class="w-100 h-100 text-white text-decoration-none d-flex justify-content-center align-items-center h4">Новости</a>
+        </div>
+        <div class="w-100 text-white text-center py-5 h-55p">
+            <a href="{{ path('order_index') }}" class="w-100 h-100 text-white text-decoration-none d-flex justify-content-center align-items-center h4">Заказы</a>
+        </div>
+    </div>
+{% endblock %}

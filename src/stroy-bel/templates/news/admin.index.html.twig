@@ -1,0 +1,41 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Новостиx{% endblock %}
+
+{% block body %}
+    <h1 class="h1 text-center">Новости</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Название</th>
+                <th>Дата</th>
+                <th>Тело</th>
+                <th>Изображение</th>
+                <th>Дейсвтия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for news in news %}
+            <tr>
+                <td>{{ news.id }}</td>
+                <td>{{ news.title }}</td>
+                <td>{{ news.date ? news.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td><img src="../../{{ news.image }}" alt="Новость" class="w-300p"></td>
+                <td>{{ news.body }}</td>
+                <td>
+                    <a href="{{ path('news_show', {'id': news.id}) }}">show</a>
+                    <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('news_new') }}">Create new</a>
+{% endblock %}

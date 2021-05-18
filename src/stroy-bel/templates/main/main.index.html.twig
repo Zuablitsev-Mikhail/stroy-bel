@@ -1,0 +1,163 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="body__overlay"></div>
+        <!-- Start Feature Product -->
+        <section class="categories-slider-area bg__white">
+            <div class="container">
+                <div class="row">
+                    <!-- Start Left Feature -->
+                    <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12 float-right-style">
+                        <div class="categories-menu mrg-xs">
+                            <div class="category-heading">
+                                <h3><a href="{{ path('catalog') }}">Каталог</a></h3>
+                            </div>
+                            <div class="category-menu-list">
+                                <ul>
+                                    {% for category in categories %}
+                                        <li><a href="{{ path('catalog') }}?p=1&c={{ category.id }}"><img alt="" src="images/icons/thum7.png"> {{ category.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-lg-9 col-sm-8 col-xs-12 float-left-style">
+                        <!-- Start Slider Area -->
+                        <div class="slider__container slider--one">
+                            <div class="slider__activation__wrap owl-carousel owl-theme">
+                                <!-- Start Single Slide -->
+                                <div class="slide slider__full--screen slider-height-inherit slider-text-right" style="background: rgba(0, 0, 0, 0) url(img/main-slider-img.jpg) no-repeat scroll center center / cover ;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-10 col-lg-8 col-md-offset-2 col-lg-offset-4 col-sm-12 col-xs-12">
+                                                <div class="slider__inner">
+                                                    <h1>New Product <span class="text--theme">Collection</span></h1>
+                                                    <div class="slider__btn">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Single Slide -->
+                                <!-- Start Single Slide -->
+                                <div class="slide slider__full--screen slider-height-inherit  slider-text-left" style="background: rgba(0, 0, 0, 0) url(img/secondary-slider-img.jpg) no-repeat scroll center center / cover ;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                                                <div class="slider__inner">
+                                                    <h1>New Product <span class="text--theme">Collection</span></h1>
+                                                    <div class="slider__btn">
+                                                        <a class="htc__btn" href="cart.html">shop now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Single Slide -->
+                            </div>
+                        </div>
+                        <!-- Start Slider Area -->
+                    </div>
+                    <!-- End Left Feature -->
+                </div>
+            </div>
+        </section>
+        <!-- End Feature Product -->
+
+        <!-- Start Our Product Area -->
+        <section class="htc__product__area bg__white my-5">
+            <div class="container">
+                <div class="row text-center">
+                    <h2 class="h2">Новинки</h2>
+                </div>
+                <div class="row">
+                    {% for product in products %}
+                        <div class="product col-md-3 col-sm-4 col-xs-12 mt-0">
+                            <div class="product">
+                                <div class="product__inner">
+                                    <div class="pro__thumb">
+                                        <a href="{{ path('view') }}?id={{ product.id }}">
+                                            <img src="{{ product.image }}" alt="product images">
+                                        </a>
+                                    </div>
+                                    <div class="product__hover__info">
+                                        <ul class="product__action">
+                                           <li><a title="Добавить в корзину" href="{{ path('cart') }}/addtocart/{{ product.id }}"><span class="ti-shopping-cart"></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product__details">
+                                    <h2 class="h2 font-size-14"><a href="{{ path('view') }}?id={{ product.id }}">{{ product.title }}</a></h2>
+                                    <ul class="product__price">
+{#                                        <li class="old__price">$16.00</li>#}
+                                        <li class="price font-size-12">{{ product.price }} BYN</li>
+{#                                        <li class="new__price">$10.00</li>#}
+                                    </ul>
+                                    <div class="description font-size-12">{{ product.description }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="m-auto text-center my-5"><a href="{{ path('catalog') }}?p=1"><button class="btn btn-info">К каталогу товаров</button></a></div>
+        </section>
+        <!-- End Our Product Area -->
+
+        <!-- End Our Product Area -->
+        <div class="only-banner bg__white my-5">
+            <div class="container">
+                <div class="only-banner-img">
+                    <a href="shop-sidebar.html"><img src="img/main-separator.jpg" alt="new product"></a>
+                </div>
+            </div>
+        </div>
+        <!-- Start Our Product Area -->
+
+        <!-- Start Blog Area -->
+        <section class="htc__blog__area bg__white pb--130">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="section__title section__title--2 text-center">
+                            <h2 class="title__line">Последние новости</h2>
+                            <p>Если вы не хотите пропустить скидки, подпишитесь на наши новости</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="blog__wrap clearfix mt--60 xmt-30">
+                        <!-- Start Single Blog -->
+                        {% for news in newsList|slice(0,3) %}
+                            <div class="big-post col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                                <article class="card card-full hover-a mb-4">
+                                    <div class="ratio_360-202 image-wrapper">
+                                        <a href="{{ path('news') }}{{ news.id }}">
+                                            <img width="360" height="202" src="{{ news.image }}" class="img-fluid lazy wp-post-image loaded" alt="" loading="lazy" sizes="(max-width: 360px) 100vw, 360px" data-was-processed="true">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h2 class="card-title h1-sm h3-lg">
+                                            <a href="{{ path('news') }}{{ news.id }}">{{ news.title }}</a>
+                                        </h2>
+                                        <div class="card-text mb-2 text-muted small">
+                                            <time class="news-date">{{ news.date|date('d-M-Y H:i:s') }}</time>
+                                            <span title="0 Comment" class="float-end"></span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

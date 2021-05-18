@@ -1,0 +1,12 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Оформление{% endblock %}
+
+{% block body %}
+    <div class="container my-3">
+        <h1 class="text-center">Создание заказа</h1>
+
+        {{ include('checkout/_form.html.twig') }}
+
+    </div>
+{% endblock %}

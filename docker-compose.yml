@@ -1,0 +1,54 @@
+version: '3.6'
+services:
+
+  app:
+    build: docker/nginx
+    ports:
+      - 80:8080
+    links:
+      - phpfpm
+    volumes:
+#      - ./src:/var/www/html
+      - ./src/stroy-bel:/var/www/html
+#      - ./media:/var/www/html/uploads/media
+      #      - ./src:/var/www/html:rw,cached
+      #      - ./share-files/composer:/var/www/html/var/composer_home
+      - ./share-files/composer:/var/www/.composer
+      - ./share-files/logs/nginx:/var/log/nginx
+#      - sockdata:/sock
+    networks:
+      - wp-network
+
+  phpfpm:
+    build: docker/phpfpm
+    links:
+      - db
+    environment:
+      XDEBUG_CONFIG: idekey=PHPSTORM
+    volumes:
+      - ./src/stroy-bel:/var/www/html
+      #      - ./src:/var/www/html:rw,cached
+      - ./share-files/composer:/var/www/html/var/composer_home
+      - ./share-files/composer:/var/www/.composer
+    #      - sockdata:/sock
+    networks:
+      - wp-network
+
+  db:
+    build: ./docker/mysql
+    ports:
+      - 3305:3306
+    volumes:
+      - ./share-files/backup:/tmp/db
+#      - ./share-files/db:/var/lib/mysql
+      - ./share-files/database:/var/lib/mysql
+    env_file: docker/mysql/config/mysql.env
+    networks:
+      - wp-network
+
+volumes:
+  sockdata:
+
+networks:
+  wp-network:
+    driver: bridge

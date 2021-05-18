@@ -1,0 +1,73 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Каталог{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="body__overlay"></div>
+    <!-- Start Feature Product -->
+    <section class="categories-slider-area bg__white">
+        <div class="container my-5">
+            <div class="row">
+                <!-- Start Left Feature -->
+                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12 float-right-style my-3">
+                    <div class="categories-menu mrg-xs">
+                        <div class="category-heading">
+                            <h3><a href="{{ path('catalog') }}">Каталог</a></h3>
+                        </div>
+                        <div class="category-menu-list">
+                            {% for category in categories %}
+                                <li class="list-group-item"><a href="{{ path('catalog') }}?p=1&c={{ category.id }}"><img alt="" src="images/icons/thum7.png"> {{ category.title }}</a></li>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-lg-9 col-sm-8 col-xs-12 float-left-style">
+                    {%  if products is empty %}
+                        <h2 class="my-5">К сожалению продуткы не найдены :(</h2>
+                    {% endif %}
+            {% for product in products|slice((page-1)*20, 20) %}
+                <div class="product col-md-3 col-sm-4 col-xs-12 my-0 d-flex align-items-start" style="height: 500px">
+                    <div class="product">
+                        <div class="product__inner">
+                            <div class="pro__thumb">
+                                <a href="{{ path('view') }}?id={{ product.id }}">
+                                    <img src="{{ product.image }}" alt="product images">
+                                </a>
+                            </div>
+                            <div class="product__hover__info">
+                                <ul class="product__action">
+                                    <li><a title="Добавить в корзину" href="{{ path('cart') }}/addtocart/{{ product.id }}"><span class="ti-shopping-cart"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product__details">
+                            <h2><a href="{{ path('view') }}?id={{ product.id }}">{{ product.title }}</a></h2>
+                            <ul class="product__price">
+                                {# <li class="old__price">$16.00</li>#}
+                                <li class="price">{{ product.price }} BYN</li>
+                                {# <li class="new__price">$10.00</li>#}
+                            </ul>
+                            <div class="description">{{ product.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="pagination text-center justify-content-center d-flex my-5">
+            {% for i in products %}
+                {% if loop.index % 20 == 0  %}
+                    <a class="d-block text-decoration-none" href="?p={{ loop.index / 20 }}">{{ loop.index / 20 }}</a> <span class="mx-1"> </span>
+                {% endif %}
+                {% if loop.last and not loop.index % 20 == 0 %}
+                    <a class="d-block text-decoration-none" href="?p={{ (loop.index / 20 +1)|round(0, 'floor') }}">{{ (loop.index / 20 +1)|round(0, 'floor') }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'main.addition.html.twig' %}
+
+{% block title %}New Order{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Создание заказа</h1>
+        {{ include('checkout/_form.html.twig') }}
+    </div>
+{% endblock %}

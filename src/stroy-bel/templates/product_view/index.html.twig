@@ -1,0 +1,184 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}{{ products.title }}{% endblock %}
+
+{% block body %}
+    <!-- Start Product Details -->
+    <section class="htc__product__details pt--100 pb--100 bg__white">
+        <div class="container">
+            <div class="scroll-active">
+                <div class="row">
+                    <div class="col-md-7 col-lg-7 col-sm-5 col-xs-12">
+                        <div class="product__details__container product-details-5">
+                            <div class="scroll-single-product mb--30">
+                                <img src="{{ products.image }}" alt="full-image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-active col-md-5 col-lg-5 col-sm-7 col-xs-12 xmt-30">
+                        <div class="htc__product__details__inner ">
+                            <div class="pro__detl__title">
+                                <h2>{{ products.title }}</h2>
+                            </div>
+                            <div class="pro__dtl__rating">
+                                <ul class="pro__rating">
+                                    {% for i in 1..5 %}
+                                        {% if i <= rating %}
+                                            <li><span class="zmdi zmdi-star"></span></li>
+                                        {% else %}
+                                            <li><span class="ti-star"></span></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <span class="rat__qun">(Средняя оценка: {{ rating|number_format(2) }})</span>
+                            </div>
+                            <div class="pro__details">
+                                <p>{{ products.description | raw }}</p>
+                            </div>
+                            <ul class="pro__dtl__prize">
+                                <li>{{ products.price }} BYN</li>
+                            </ul>
+                            <div class="product-action-wrap">
+                                <div class="prodict-statas"><span>Quantity :</span></div>
+                                <div class="product-quantity">
+                                    <form id='myform' method='POST' action='#'>
+                                        <div class="product-quantity">
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="02">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <ul class="pro__dtl__btn">
+                                <li class="buy__now__btn">
+                                    <a id="addCart_{{ products.id }}" href="{{ path('cart') }}/addtocart/{{ products.id }}" onclick="addToCart({{ products.id }}); return false;">
+                                        В корзину
+                                    </a>
+                                </li>
+                                <li><a href="#"><span class="ti-heart"></span></a></li>
+                                <li><a href="#"><span class="ti-email"></span></a></li>
+                            </ul>
+                            <div class="pro__social__share">
+                                <h2>Share :</h2>
+                                <ul class="pro__soaial__link">
+                                    <li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-google-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Product Details -->
+    <!-- Start Product tab -->
+    <section class="htc__product__details__tab bg__white pb--120">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <ul class="product__deatils__tab mb--60" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#description" role="tab" data-toggle="tab">Описание</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#reviews" role="tab" data-toggle="tab">Обзоры</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product__details__tab__content">
+                        <!-- Start Single Content -->
+                        <div role="tabpanel" id="description" class="product__tab__content fade in active">
+                            <div class="product__description__wrap">
+                                <div class="product__desc">
+                                    <h2 class="title__6">Описание</h2>
+                                    <p>{{ products.longdescription | raw}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Content -->
+                        <!-- Start Single Content -->
+                        <div role="tabpanel" id="reviews" class="product__tab__content fade">
+                            <div class="review__address__inner my-5">
+
+                                <!-- Start Single Review -->
+                                {% for comment in comments %}
+                                <div class="pro__review my-5">
+                                    <div class="review__thumb">
+                                        <img src="images/review/1.jpg" alt="review images">
+                                    </div>
+                                    <div class="review__details">
+                                        <div class="review__info">
+                                            <h4><a href="#">{{ comment.user.email }}</a></h4>
+                                            <ul class="rating">
+                                                {% for i in 1..5 %}
+                                                    {% if i <= comment.rating %}
+                                                        <li><span class="zmdi zmdi-star"></span></li>
+                                                    {% else %}
+                                                        <li><span class="ti-star"></span></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="review__date">
+                                            <span>{{ comment.date|date('Y-m-d H:i:s') }}</span>
+                                        </div>
+                                        <p>{{ comment.body }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <!-- End Single Review -->
+
+                            </div>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <!-- Start RAting Area -->
+                            <div class="rating__wrap mt--60">
+                                <h2 class="rating-title">Оставьте отзыв!</h2>
+                                <h4 class="rating-title-2">Оцените продукт</h4>
+                            </div>
+                            <!-- End RAting Area -->
+                            <div class="review__box">
+                                <form id="review-form" action="{{ path('new_comment') }}">
+                                    <label for="rating">Рейтинг</label>
+                                    <select name="rating" class="form-select" id="rating">
+                                        <option value="5" selected>5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                    </select>
+                                    <div class="single-review-form">
+
+                                    </div>
+                                    <div class="single-review-form mt-2">
+                                        <label for="review">Отзыв</label>
+                                        <div class="review-box message">
+                                            <textarea name="body" placeholder="Отзыв" class="form-text" id="review" minlength="10" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="review-btn text-center">
+                                        <button type="submit" class="btn-danger w-300p text-center">Отправить</button>
+                                    </div>
+                                    <input type="hidden" value="{{ products.id }}" name="productId">
+                                </form>
+                            </div>
+                        </div>
+                        <!-- End Single Content -->
+                        {% else %}
+                        <h3 class="h3 text-center my-5">Авторизуйтесь, чтобы оставить отзыв</h3>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Product tab -->
+{% endblock %}
+
+{#<i class="zmdi zmdi-star"></i>#}

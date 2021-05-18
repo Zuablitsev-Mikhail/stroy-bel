@@ -1,0 +1,22 @@
+[mysqld]
+
+binlog_do_db = wordpress
+
+general_log = 0
+general_log_file = "/var/log/mysql/mysql.log"
+user=root
+
+table_open_cache = 4096
+
+max_connections = 64
+innodb_buffer_pool_size = 32M
+query_cache_size = 32M
+query_cache_limit = 1M
+
+thread_cache_size = 16
+innodb_flush_log_at_trx_commit = 2
+innodb_log_file_size = 256M
+innodb_file_per_table = ON
+innodb_log_buffer_size = 2M
+innodb_flush_log_at_trx_commit = 2
+query_cache_size = 0

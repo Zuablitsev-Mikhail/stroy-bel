@@ -1,0 +1,53 @@
+{% extends 'main.addition.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="blog-details-top">
+            <!--Start Blog Thumb -->
+            <div class="blog-details-thumb-wrap">
+                <div class="blog-details-thumb">
+                    <img src="../{{ news.image }}" alt="blog images">
+                </div>
+            </div>
+            <!--End Blog Thumb -->
+
+            <h1 class="h1 my-3">{{ news.title }}</h1>
+            <span class="text-muted">{{ news.date|date('d-M-Y H:i:s') }}</span>
+            <div class="blog-admin-and-comment">
+            </div>
+            <!-- Start Blog Pra -->
+            <div class="blog-details-pra">
+                <p>{{ news.body | raw }}</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dol orea magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit</p>
+            </div>
+            <!-- End Blog Pra -->
+
+
+            <!-- Start Reply Form -->
+            <div class="our-reply-form-area mt--20">
+                <h2 class="section-title-2">LEAVE A REPLY</h2>
+                <div class="reply-form-inner mt--40">
+                    <div class="reply-form-box">
+                        <div class="reply-form-box-inner">
+                            <div class="rfb-single-input">
+                                <input type="text" placeholder="Name*">
+                            </div>
+                            <div class="rfb-single-input">
+                                <input type="email" placeholder="Email*">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reply-form-box">
+                        <textarea name="message" placeholder="Message"></textarea>
+                    </div>
+                    <div class="blog__details__btn">
+                        <a class="htc__btn btn--gray" href="#">submit</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End Reply Form -->
+        </div>
+    </div>
+{% endblock %}
