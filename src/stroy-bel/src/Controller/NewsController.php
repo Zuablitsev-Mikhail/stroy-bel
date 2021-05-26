@@ -33,7 +33,7 @@ class NewsController extends AbstractController
     public function allNews(NewsRepository $newsRepository): Response
     {
         return $this->render('news/admin.index.html.twig', [
-            'news' => $newsRepository->findAll(),
+            'news' => $newsRepository->getNewsListSortedByDate(),
         ]);
     }
     /**
@@ -56,6 +56,9 @@ class NewsController extends AbstractController
                     $imageName
                 );
                 $news->setImage("img/news-image/" . $imageName);
+            }
+            else {
+                $news->setImage("img/default/default.jpg");
             }
             $news->setDate(new \DateTime());
             $entityManager->persist($news);

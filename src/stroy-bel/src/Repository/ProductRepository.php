@@ -43,7 +43,7 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-    public function getAFewProductsInCategorySortedByDate($value)
+    public function getProductsInCategorySortedByDate($value)
     {
         return $this->createQueryBuilder('p')
             ->where('p.category = ' . $value)

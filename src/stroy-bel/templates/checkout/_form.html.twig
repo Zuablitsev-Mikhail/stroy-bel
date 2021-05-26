@@ -1,4 +1,12 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="text-center"><button class="btn btn-info w-300p">{{ button_label|default('Оформить') }}</button></div>
+    <div class="text-center"><a href="{{ path('address_new') }}"><img class="w-30p mb-3" src="../images/others/addAddress.jpg" alt=""></a></div>
+    <div class="row mt-5 mb-3">
+        <div class="col w-50">
+        </div>
+        <div class="col w-50 font-size-14 text-right">
+            <b>Итого: </b> <span class="color--googleplus"> {{ coast }} BYN</span>
+        </div>
+    </div>
+    <div class="text-center row"><button class="btn btn-info">{{ button_label|default('Оформить') }}</button></div>
 {{ form_end(form) }}

@@ -39,12 +39,12 @@
                                 <li>{{ products.price }} BYN</li>
                             </ul>
                             <div class="product-action-wrap">
-                                <div class="prodict-statas"><span>Quantity :</span></div>
+                                <div class="prodict-statas"><span>Колличество :</span></div>
                                 <div class="product-quantity">
                                     <form id='myform' method='POST' action='#'>
                                         <div class="product-quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="02">
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" max="10" min="1" readonly>
                                             </div>
                                         </div>
                                     </form>
@@ -52,7 +52,7 @@
                             </div>
                             <ul class="pro__dtl__btn">
                                 <li class="buy__now__btn">
-                                    <a id="addCart_{{ products.id }}" href="{{ path('cart') }}/addtocart/{{ products.id }}" onclick="addToCart({{ products.id }}); return false;">
+                                    <a id="addToCart" href="{{ path('cart') }}/addtocart/{{ products.id }}/">
                                         В корзину
                                     </a>
                                 </li>
@@ -179,6 +179,15 @@
         </div>
     </section>
     <!-- End Product tab -->
+    <script>
+        const defaultLink = "{{ path('cart') }}/addtocart/{{ products.id }}/";
+        quantityBtn = document.querySelector('.cart-plus-minus-box');
+        addToCartBtn = document.querySelector('#addToCart');
+        addToCartBtn.onclick = function () {
+            link = addToCartBtn.href = defaultLink + quantityBtn.value;
+            console.log(link);
+        }
+    </script>
 {% endblock %}
 
 {#<i class="zmdi zmdi-star"></i>#}

@@ -24,19 +24,19 @@ class Order
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $address;
-
-    /**
      * @ORM\Column(type="json")
      */
     private $product = [];
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Address::class, inversedBy="orders")
+     */
+    private $address;
 
     public function getId(): ?int
     {
@@ -55,30 +55,6 @@ class Order
         return $this;
     }
 
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
     public function getProduct(): ?array
     {
         return $this->product;
@@ -87,6 +63,30 @@ class Order
     public function setProduct(array $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }

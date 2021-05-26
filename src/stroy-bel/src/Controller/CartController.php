@@ -29,20 +29,23 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("cart/addtocart/{id}", name="addCart")
+     * @Route("cart/addtocart/{id}/{quantity}", name="addCart")
      * @param int $id
+     * @param int $quantity
      * @return Response
      */
-    public function addToCartAction(int $id): Response
+    public function addToCartAction(int $id, int $quantity = 1): Response
     {
         if(!isset($_COOKIE['cart'])) setcookie('cart',0, time() + 86400, "/");
         else $cookie = json_decode($_COOKIE['cart']);
-        $cookie[] = intval($id);
+        for($i = 0; $i < $quantity; $i++){
+            $cookie[] = intval($id);
+        }
         setcookie('cart',json_encode($cookie), time() + 86400, "/");
         $resData['cntItems'] = count($cookie);
         $resData['success'] = 1;
         echo json_encode($resData);
-        return $this->redirect($this->generateUrl('main'));
+        return $this->redirect($this->generateUrl('view')."?id=$id");
     }
 
     /**

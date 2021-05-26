@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\News;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,9 +18,12 @@ class NewsType extends AbstractType
             ->add('image', FileType::class, [
                 'mapped' => false,
                 'label' => "Выберите фото",
-                'attr' => array('accept' => 'image/jpeg,image/png')
+                'attr' => array('accept' => 'image/jpeg,image/png'),
+                'required' => false,
             ])
-            ->add('body')
+            ->add('body', TextareaType::class, [
+                'attr' => array('class' => 'textarea')
+            ])
         ;
     }
 

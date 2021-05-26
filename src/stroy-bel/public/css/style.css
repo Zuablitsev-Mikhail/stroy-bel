@@ -2595,6 +2595,7 @@ select.select-color {
     max-width: 82px;
     padding-left: 25px;
     padding-right: 24px;
+    text-align: center;
 }
 .cart-plus-minus {
     position: relative;
@@ -2602,12 +2603,12 @@ select.select-color {
 .dec.qtybutton {
     color: #666666;
     font-size: 16px;
-    left: 0;
+    left: 10px;
     position: absolute;
 }
 .inc.qtybutton {
     position: absolute;
-    right: 17px;
+    right: 10px;
 }
 .pro__dtl__btn {
     display: flex;
@@ -4151,4 +4152,13 @@ a.shipping-calculator-button:hover {
 }
 :focus {
     outline: -webkit-focus-ring-color auto 0px;
+}
+
+.qtybutton {
+    cursor: pointer;
+}
+
+.cart-plus-minus{
+    border: 1px solid rgba(0,0,0,0.5);
+    text-align: center;
 }

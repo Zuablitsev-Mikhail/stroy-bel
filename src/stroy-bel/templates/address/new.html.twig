@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Address{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="../build/app.4c45a463.css">
+    <link rel="stylesheet" href="../css/config.css">
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Добавть новый адрес</h1>
+
+    {{ include('address/_form.html.twig') }}
+
+    <div class="row"><a href="{{ path('customer') }}" class="btn btn-secondary mb-3">Вернуться</a></div>
+</div>
+{% endblock %}

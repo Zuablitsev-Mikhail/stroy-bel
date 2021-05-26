@@ -1,0 +1,93 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Hello ContactsController!{% endblock %}
+
+{% block body %}
+    <!-- Start Contact Area -->
+    <section class="htc__contact__area ptb--120 bg__white">
+        <div class="container">
+            <div class="row">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="htc__contact__container">
+                        <div class="htc__contact__address">
+                            <h2 class="contact__title">Контакты</h2>
+                            <div class="contact__address__inner">
+                                <!-- Start Single Adress -->
+                                <div class="single__contact__address">
+                                    <div class="contact__icon">
+                                        <span class="ti-location-pin"></span>
+                                    </div>
+                                    <div class="contact__details">
+                                        <p>Местоположение : <br> Гродно, ул. Советских пограничников 2</p>
+                                    </div>
+                                </div>
+                                <!-- End Single Adress -->
+                            </div>
+                            <div class="contact__address__inner">
+                                <!-- Start Single Adress -->
+                                <div class="single__contact__address">
+                                    <div class="contact__icon">
+                                        <span class="ti-mobile"></span>
+                                    </div>
+                                    <div class="contact__details">
+                                        <p> Телефон : <br><a href="#">+012 345 678 102 </a></p>
+                                    </div>
+                                </div>
+                                <!-- End Single Adress -->
+                                <!-- Start Single Adress -->
+                                <div class="single__contact__address">
+                                    <div class="contact__icon">
+                                        <span class="ti-email"></span>
+                                    </div>
+                                    <div class="contact__details">
+                                        <p> Почта :<br><a href="#">info@example.com</a></p>
+                                    </div>
+                                </div>
+                                <!-- End Single Adress -->
+                            </div>
+                        </div>
+                        <div class="contact-form-wrap">
+                            <div class="contact-title">
+                                <h2 class="contact__title">Обратная связь</h2>
+                            </div>
+                            <form id="contact-form" action="{{ path('sendcontactmail') }}" method="post">
+                                <div class="single-contact-form">
+                                    <div class="contact-box name">
+                                        <input type="text" name="name" placeholder="Имя*" required>
+                                        <input type="email" name="email" placeholder="Почта*" required>
+                                    </div>
+                                </div>
+                                <div class="single-contact-form">
+                                    <div class="contact-box subject">
+                                        <input type="text" name="subject" placeholder="Тема*" required>
+                                    </div>
+                                </div>
+                                <div class="single-contact-form">
+                                    <div class="contact-box message">
+                                        <textarea name="message"  placeholder="Сообщение*" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="contact-btn">
+                                    <button type="submit" class="fv-btn">Отправить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 smt-30 xmt-30">
+                    <div class="map-contacts">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19446.71125115912!2d23.846449098041727!3d53.66866931876682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x694c8a5844c16dda!2sGrodno%20State%20Polytechnic%20College!5e0!3m2!1sen!2sby!4v1621916084297!5m2!1sen!2sby" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Contact Area -->
+
+
+{% endblock %}

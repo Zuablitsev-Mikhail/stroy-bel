@@ -1,0 +1,104 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block body %}
+    {% set totalPrice = 0 %}
+    {% set count = 0 %}
+    <div class="container bootstrap snippet">
+        <div class="row">
+            <div class="col-sm-10"><h1></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"><!--left col-->
+
+
+                <div class="text-center">
+                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <div class="my-3">{{ app.user.email }}</div>
+                </div><br>
+
+
+
+            </div><!--/col-3-->
+            <div class="col-sm-9">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#addresses">Адреса</a></li>
+                    <li><a data-toggle="tab" href="#orders">Заказы</a></li>
+{#                    <li><a data-toggle="tab" href="#wishList">Список желаемых товаров</a></li>#}
+                </ul>
+
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="addresses">
+                        <div class="row">
+                            <a class="btn btn-info my-3" href="{{ path('address_new') }}">Добавить адрес</a>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Адрес</th>
+                                    <th scope="col">Телефон</th>
+                                    <th scope="col">Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for address in addresses %}
+                                    <tr>
+                                        <th scope="row" class="align-middle">1</th>
+                                        <td class="align-middle">
+                                            {{ address.country }}, {{ address.city }} <br>
+                                            {{ address.address }} <br>
+                                            {{ address.zip }}
+                                        </td>
+                                        <td class="align-middle">{{ address.phone }}</td>
+                                        <td class="align-middle"><a href="{{ path('address_edit', {'id': address.id}) }}" class="color--twitter">Редактировать</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="orders">
+                        <div class="table-content table-responsive">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Продукт</th>
+                                    <th class="product-name">Наименование</th>
+                                    <th class="product-price">Цена</th>
+                                    <th class="product-quantity">Колличество</th>
+                                    <th class="product-quantity">Итог</th>
+                                    <th class="product-remove">Удалить</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in products %}
+                                    {% if product.id in data %}
+                                        {% set count = data|filter(v => v == product.id)|length %}
+                                        <tr>
+                                            <td class="product-thumbnail"><a href="#"><img src="{{ product.image }}" alt="product img" /></a></td>
+                                            <td class="product-name"><a href="#">{{ product.title }}</a></td>
+                                            <td class="product-price"><span class="amount">{{ product.price }} BYN</span></td>
+                                            <td class="product-quantity"><input type="number" value="{{ count }}" min="1" readonly/></td>
+                                            <td class="product-subtotal">{{ product.price * count }}</td>
+                                            <td class="product-remove"><a href="{{ path('cart') }}/removefromcart/{{ product.id }}">X</a></td>
+                                        </tr>
+                                        {% set totalPrice = totalPrice + product.price * count %}
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="wishList">
+
+                    </div>
+                </div>
+            </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+{% endblock %}
