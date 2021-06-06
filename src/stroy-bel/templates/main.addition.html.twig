@@ -226,6 +226,42 @@
         <script src="../js/waypoints.min.js"></script>
         <!-- Main js file that contents all jQuery plugins activation. -->
         <script src="../js/main.js"></script>
+        <script>
+            let cartQuantity = $('.ti-shopping-cart');
+            function getCookie(c_name) {
+                var c_value = document.cookie,
+                    c_start = c_value.indexOf(" " + c_name + "=");
+                if (c_start == -1) c_start = c_value.indexOf(c_name + "=");
+                if (c_start == -1) {
+                    c_value = null;
+                } else {
+                    c_start = c_value.indexOf("=", c_start) + 1;
+                    var c_end = c_value.indexOf(";", c_start);
+                    if (c_end == -1) {
+                        c_end = c_value.length;
+                    }
+                    c_value = unescape(c_value.substring(c_start, c_end));
+                }
+                return c_value;
+            }
+
+            $(document).ready(function() {
+                var acookie = getCookie("cart");
+                let count = 0;
+                let cartProducts = acookie.replace('[', '').replace(']', '').split(',');
+                if(acookie) {
+                    for (let i = 0; i < cartProducts.length; i++){
+                        if(cartProducts[i] !==  '0'){
+                            count++;
+                        }
+                    }
+                    if(count > 0) {
+                        cartQuantity.text(count);
+                    }
+                }
+
+            });
+        </script>
     {% endblock %}
 </body>
 </html>
