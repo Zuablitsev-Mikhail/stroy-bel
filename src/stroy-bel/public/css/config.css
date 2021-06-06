@@ -22,3 +22,13 @@
 .font-size-14{
     font-size: 14pt!important;
 }
+.tox-statusbar__branding{
+    display: none;
+}
+
+a {
+    text-decoration: none!important;
+}
+li {
+    list-style: none!important;
+}

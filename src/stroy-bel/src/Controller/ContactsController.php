@@ -31,8 +31,8 @@ class ContactsController extends AbstractController
     public function sendMail(MailerInterface $mailer):Response
     {
         $email = (new Email())
-            ->from('trumperblog@gmail.com')
-            ->to('trumperblog@gmail.com')
+            ->from('noreplystroybel@gmail.com')
+            ->to('noreplystroybel@gmail.com')
             ->subject($_POST['subject'])
             ->html("
                         <h2>Новое сообщение от пользователя сайта!</h2>

@@ -10,12 +10,28 @@
         });
     </script>
 <div class="container">
-    <h1>Создать новость</h1>
+    <h1 class="h1 my-3 text-center">Создать новость</h1>
+        {{ include('news/_form.html.twig') }}
 
-    {{ include('news/_form.html.twig') }}
-
-    <a href="{{ path('news_index') }}">back to list</a>
+    <div class="row text-center mt-3">
+        <a href="{{ path('news_index') }}">back to list</a>
+    </div>
 </div>
+
+    <script src="../../js/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $(window).on('load', function () {
+            let textArea = $('#news_body');
+            let textBody = $('#news_body_ifr');
+
+            console.log(textArea);
+            textBody.contents().find('#tinymce').on('keyup change', function() {
+                textArea.val(textBody.contents().find('#tinymce').html());
+                console.log(textBody.contents().find('#tinymce').html());
+            });
+        });
+    </script>
 
 {% endblock %}
 

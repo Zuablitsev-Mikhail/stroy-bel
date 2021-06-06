@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderProduct;
 use App\Form\OrderType;
+use App\Repository\OrderProductRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,17 +26,37 @@ class CheckoutController extends AbstractController
         $productListInCart = [];
         $coast = 0;
         if ($form->isSubmitted() && $form->isValid()) {
-            if(!isset($_COOKIE['cart'])) setcookie('cart',0, time() + 86400, "/");
-            else $cookie = json_decode($_COOKIE['cart']);
-            $order->setProduct($cookie);
+
+            $entityManager = $this->getDoctrine()->getManager();
+
             $user = $security->getUser();
             $order->setUser($user);
             $order->setStatus(0);
-            $entityManager = $this->getDoctrine()->getManager();
+            $order->setDate(new \DateTime());
+
             $entityManager->persist($order);
             $entityManager->flush();
-            setcookie('cart',0, time() + 86400, "/");
-            return $this->redirectToRoute('main');
+
+            if(!isset($_COOKIE['cart'])) {
+                setcookie('cart',0, time() + 86400, "/");
+            }
+            else {
+                $cookie = json_decode($_COOKIE['cart']);
+            }
+
+            $orderedProducts = array_count_values($cookie);
+            foreach ($orderedProducts as $productId=>$quantity) {
+                if($productId != 0) {
+                    $orderedProduct = new OrderProduct();
+                    $orderedProduct->setProduct($productRepository->findOneBy(['id' => $productId]));
+                    $orderedProduct->setOrder($order);
+                    $orderedProduct->setQuantity($quantity);
+                    $entityManager->persist($orderedProduct);
+                    $entityManager->flush();
+                }
+            }
+            setcookie('cart',"", time() + 86400, "/");
+            return $this->redirectToRoute('order_success');
         }
 
         if(isset($_COOKIE['cart'])) {
@@ -50,6 +72,14 @@ class CheckoutController extends AbstractController
             'order' => $order,
             'form' => $form->createView(),
             'coast' => $coast
+        ]);
+    }
+    /**
+     * @Route("/success", name="checkout_success")
+     */
+    public function showSuccess(): Response
+    {
+        return $this->render('checkout/success.html.twig', [
         ]);
     }
 }

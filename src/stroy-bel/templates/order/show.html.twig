@@ -3,32 +3,43 @@
 {% block title %}Order{% endblock %}
 
 {% block body %}
-    <h1>Order</h1>
+    <div class="container">
+        <h1 class="h1m my-3">Заказ № {{ order.id }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ order.id }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ order.city }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ order.address }}</td>
-            </tr>
-            <tr>
-                <th>Product</th>
-                <td>{{ order.product ? order.product|json_encode : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ order.id }}</td>
+                </tr>
+                <tr>
+                    <th>Адрес</th>
+                    <td>{{ order.address }}</td>
+                </tr>
+                <tr>
+                    <th>Дата</th>
+                    <td>{{ order.date |date('d-M-Y H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Продукты</th>
+                    <td>
+                        {% for orderedProduct in order.orderProducts %}
+                            <ul class="p-0">{{ orderedProduct.product.title }} x {{ orderedProduct.quantity }} </ul>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row text-center">
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('order_index') }}">Назад</a>
 
-    <a href="{{ path('order_index') }}">back to list</a>
+            <a href="{{ path('order_edit', {'id': order.id}) }}">Редактирвоать</a>
 
-    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
-
-    {{ include('order/_delete_form.html.twig') }}
+            {{ include('order/_delete_form.html.twig') }}
+            {% else %}
+                <a href="{{ path('customer') }}">Назад</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

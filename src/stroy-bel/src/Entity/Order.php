@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,11 +26,6 @@ class Order
     private $user;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    private $product = [];
-
-    /**
      * @ORM\Column(type="smallint")
      */
     private $status;
@@ -37,6 +34,21 @@ class Order
      * @ORM\ManyToOne(targetEntity=Address::class, inversedBy="orders")
      */
     private $address;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="order")
+     */
+    private $orderProducts;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date;
+
+    public function __construct()
+    {
+        $this->orderProducts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,18 +63,6 @@ class Order
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getProduct(): ?array
-    {
-        return $this->product;
-    }
-
-    public function setProduct(array $product): self
-    {
-        $this->product = $product;
 
         return $this;
     }
@@ -87,6 +87,48 @@ class Order
     public function setAddress(?Address $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderProduct[]
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts[] = $orderProduct;
+            $orderProduct->setOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getOrder() === $this) {
+                $orderProduct->setOrder(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

@@ -25,17 +25,12 @@ class CustomerController extends AbstractController
         $addresses = $customer->getAddresses();
 
         $orders = $customer->getOrders();
-        $productIdsInCart = [];
-        foreach ($orders as $order)
-        {
-            array_push($productIdsInCart, $order->getProduct());
-        }
 
         return $this->render('customer/index.html.twig', [
             'controller_name' => 'CustomerController',
             'addresses' => $addresses,
             'products' => $productRepository->findAll(),
-            'data' => $productIdsInCart[0]
+            'orders' => $orders
         ]);
     }
 }

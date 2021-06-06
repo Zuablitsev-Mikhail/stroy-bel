@@ -22,7 +22,7 @@ class OrderController extends AbstractController
     public function index(OrderRepository $orderRepository): Response
     {
         return $this->render('order/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'orders' => $orderRepository->getOrdersListSortedByDate(),
         ]);
     }
 
@@ -54,8 +54,11 @@ class OrderController extends AbstractController
      */
     public function show(Order $order): Response
     {
+        $orderedProducts = $order->getOrderProducts();
+//        dd($orderedProducts);
         return $this->render('order/show.html.twig', [
             'order' => $order,
+            'orderedProducts' => $orderedProducts
         ]);
     }
 
@@ -65,6 +68,8 @@ class OrderController extends AbstractController
     public function edit(Request $request, Order $order): Response
     {
         $form = $this->createForm(OrderType::class, $order);
+        $form->remove('address');
+        $form->add('status');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

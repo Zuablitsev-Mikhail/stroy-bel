@@ -8,11 +8,24 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="../../build/app.4c45a463.css">
             <link rel="stylesheet" href="../../css/config.css">
+            <link rel="stylesheet" href="../../css/admin.css">
         {% endblock %}
 
 
     </head>
     <body>
+        {% block header %}
+            <header class="position-fixed w-100 h-55p d-flex justify-content-between shadow align-items-center bg-dark">
+                <div class="column w-25"></div>
+                <ul class="column w-75 d-flex justify-content-around align-items-center text-light h-100 my-0">
+                    <li><a class="text-white" href="{{ path('admin') }}">В админ панель</a></li>
+                    <li><a class="text-white" href="{{ path('product_index') }}">Продукты</a></li>
+                    <li><a class="text-white" href="{{ path('news_index') }}">Новости</a></li>
+                    <li><a class="text-white" href="{{ path('main')}}">В магазин</a></li>
+                    <li><a class="text-white" href="{{ path('app_logout')}}">Выйти</a></li>
+                </ul>
+            </header>
+        {% endblock %}
         {% block body %}
         {% endblock %}
         {% block javascripts %}

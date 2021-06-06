@@ -1,34 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Order index{% endblock %}
 
 {% block body %}
-    <h1>Order index</h1>
+    <h1 class="h1 text-center my-3">Order index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>City</th>
-                <th>Address</th>
-                <th>Product</th>
-                <th>actions</th>
+                <th>адрес</th>
+                <th>email</th>
+                <th>статус</th>
+                <th>дата</th>
+                <th>действия</th>
             </tr>
         </thead>
         <tbody>
         {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.city }}</td>
                 <td>{{ order.address }}</td>
+                <td>{{ order.user.email }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.date |date('d-M-Y H:i:s') }}</td>
                 <td>
-                {% for item in order.product %}
-                        <a href="{{ path('product_index') }}{{ item }}">{{ item }}</a>
-                {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('order_show', {'id': order.id}) }}">show</a>
-                    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+                    <a href="{{ path('order_show', {'id': order.id}) }}">Подробнее</a>
+                    <a href="{{ path('order_edit', {'id': order.id}) }}">Редактировать</a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('order_new') }}">Create new</a>
 {% endblock %}
