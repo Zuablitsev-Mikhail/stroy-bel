@@ -59,7 +59,7 @@ class CheckoutController extends AbstractController
                 }
             }
             setcookie('cart',"", time() + 86400, "/");
-            return $this->redirectToRoute('order_success');
+            return $this->redirectToRoute('checkout_success');
         }
 
         if(isset($_COOKIE['cart'])) {
