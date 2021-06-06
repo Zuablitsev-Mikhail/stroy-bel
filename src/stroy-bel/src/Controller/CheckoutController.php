@@ -41,7 +41,7 @@ class CheckoutController extends AbstractController
             $entityManager->flush();
 
             if(!isset($_COOKIE['cart'])) {
-                setcookie('cart',0, time() + 86400, "/");
+                setcookie('cart',"", time() + 86400, "/");
             }
             else {
                 $cookie = json_decode($_COOKIE['cart']);
