@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\OrderProduct;
+use App\Entity\User;
 use App\Form\OrderType;
 use App\Repository\OrderProductRepository;
 use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +20,11 @@ class CheckoutController extends AbstractController
     /**
      * @Route("/checkout", name="checkout")
      */
-    public function index(Request $request, Security $security, ProductRepository $productRepository)
+    public function index(Request $request, Security $security, ProductRepository $productRepository, UserRepository $userRepository)
     {
         $order = new Order();
-        $form = $this->createForm(OrderType::class, $order);
+        $user = $security->getUser();
+        $form = $this->createForm(OrderType::class, $order, ['user' => $userRepository->findOneBy(['email' => $user->getUsername()])->getId()]);
         $form->handleRequest($request);
         $productListInCart = [];
         $coast = 0;
@@ -29,7 +32,7 @@ class CheckoutController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            $user = $security->getUser();
+
             $order->setUser($user);
             $order->setStatus(0);
             $order->setDate(new \DateTime());
