@@ -18,20 +18,35 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->user = $options['user'];
-        $builder
-            ->add('address',
-                EntityType::class,
-                [
-                    'class' => Address::class,
-                    'choice_label' => 'address',
-                    'label' => 'Адрес',
-                    'query_builder' => function (AddressRepository $er) {
-                        return $er->createQueryBuilder('a')
-                            ->where('a.user = '.$this->user);
-                    },
-                ]
-            )
-        ;
+        if ($this->user){
+            $builder
+                ->add('address',
+                    EntityType::class,
+                    [
+                        'class' => Address::class,
+                        'choice_label' => 'address',
+                        'label' => 'Адрес',
+                        'query_builder' => function (AddressRepository $er) {
+                            return $er->createQueryBuilder('a')
+                                ->where('a.user = '.$this->user);
+                        },
+                    ]
+                )
+            ;
+        }
+        else {
+            $builder
+                ->add('address',
+                    EntityType::class,
+                    [
+                        'class' => Address::class,
+                        'choice_label' => 'address',
+                        'label' => 'Адрес',
+                    ]
+                )
+            ;
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
