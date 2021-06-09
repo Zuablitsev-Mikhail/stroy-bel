@@ -34,7 +34,7 @@ class CheckoutController extends AbstractController
 
 
             $order->setUser($user);
-            $order->setStatus(0);
+            $order->setStatus("Заказан");
             $order->setDate(new \DateTime());
 
             $entityManager->persist($order);

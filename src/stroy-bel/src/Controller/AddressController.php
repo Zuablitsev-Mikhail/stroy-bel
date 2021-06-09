@@ -8,6 +8,7 @@ use App\Form\AddressType;
 use App\Repository\AddressRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,8 +35,11 @@ class AddressController extends AbstractController
     {
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
+        $form->add('referer', HiddenType::class, [
+            'data' => $request->headers->get('referer'),
+            "mapped" => false
+    ]);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -45,7 +49,9 @@ class AddressController extends AbstractController
             $entityManager->persist($address);
             $entityManager->flush();
 
-            return $this->redirectToRoute('customer');
+            $url = $request->get('address')['referer'];
+
+            return $this->redirect($url);
         }
 
         return $this->render('address/new.html.twig', [

@@ -26,7 +26,7 @@ class Order
     private $user;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $status;
 
@@ -67,12 +67,12 @@ class Order
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(int $status): self
+    public function setStatus(string $status): self
     {
         $this->status = $status;
 

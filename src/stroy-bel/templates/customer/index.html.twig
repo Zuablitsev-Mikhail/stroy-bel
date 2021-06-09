@@ -58,20 +58,27 @@
                                     <th class="product-name">Адрес</th>
                                     <th class="product-quantity">Сатаус</th>
                                     <th class="product-quantity">Дата</th>
+                                    <th class="product-quantity">Сумма</th>
                                     <th class="product-quantity">Действия</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% set amount = 0 %}
                                 {% for order in orders %}
+                                    {% for product in order.orderProducts %}
+                                        {% set amount = amount + product.product.price %}
+                                    {% endfor %}
                                     <tr>
                                         <td>{{ order.id }}</td>
                                         <td>{{ order.address }}</td>
                                         <td>{{ order.status }}</td>
                                         <td>{{ order.date |date('d-M-Y H:i:s') }}</td>
+                                        <td>{{ amount }} BYN</td>
                                         <td>
                                             <a href="{{ path('order_show', {'id': order.id}) }}">Подробнее</a>
                                         </td>
                                     </tr>
+                                    {% set amount = 0 %}
                                 {% else %}
                                     <tr>
                                         <td colspan="5">Записи не найдены :(</td>

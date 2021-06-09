@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
+use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,8 +70,14 @@ class OrderController extends AbstractController
     public function edit(Request $request, Order $order): Response
     {
         $form = $this->createForm(OrderType::class, $order);
+
         $form->remove('address');
-        $form->add('status');
+        $form->add(
+            'status',
+            null,
+            ['label' => "Cтатус"]
+        );
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

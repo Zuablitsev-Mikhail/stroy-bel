@@ -1,11 +1,11 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Новостиx{% endblock %}
+{% block title %}Новости{% endblock %}
 
 {% block body %}
     <h1 class="h1 text-center my-3">Новости</h1>
 
-    <a class="btn btn-lg btn-primary mx-auto mt-5 d-block w-25" href="{{ path('news_new') }}">Create new</a>
+    <a class="btn btn-lg btn-primary mx-auto mt-5 d-block w-25" href="{{ path('news_new') }}">Создать новость</a>
     <table class="table">
         <thead>
             <tr>
@@ -26,8 +26,9 @@
                 <td><img src="../../{{ news.image }}" alt="Новость" class="w-300p"></td>
                 <td>{{ news.body }}</td>
                 <td>
-                    <a href="{{ path('news_show', {'id': news.id}) }}">show</a>
-                    <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
+                    <a href="{{ path('news_show', {'id': news.id}) }}">Подробнее</a>
+                    <br>
+                    <a href="{{ path('news_edit', {'id': news.id}) }}">Редактировать</a>
                 </td>
             </tr>
         {% else %}
