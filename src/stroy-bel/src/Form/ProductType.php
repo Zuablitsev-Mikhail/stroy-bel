@@ -23,6 +23,7 @@ class ProductType extends AbstractType
             ->add('image', FileType::class, [
                 'mapped' => false,
                 'label' => "Выберите фото",
+                'required' => false,
                 'attr' => array('accept' => 'image/jpeg,image/png')
             ])
             ->add('category',EntityType::class, ['label' => 'category', 'class' => Category::class, 'choice_label' => 'title'])

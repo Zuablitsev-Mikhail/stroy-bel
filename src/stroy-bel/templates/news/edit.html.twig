@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit News{% endblock %}
+{% block title %}Редактирование новости{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="../../../build/app.4c45a463.css">
     <link rel="stylesheet" href="../../../css/config.css">
@@ -13,9 +13,11 @@
         });
     </script>
     <div class="container">
-    <h1>Edit News</h1>
+    <h1 class="h1 text-center">Редактирование новости</h1>
         {{ include('news/_form.html.twig', {'button_label': 'Update'}) }}
-        <a href="{{ path('news_index') }}">back to list</a>
-        {{ include('news/_delete_form.html.twig') }}
+        <div class="row text-center mt-3">
+            <a href="{{ path('news_index') }}">Назад</a>
+{#            {{ include('news/_delete_form.html.twig') }}#}
+        </div>
     </div>
 {% endblock %}

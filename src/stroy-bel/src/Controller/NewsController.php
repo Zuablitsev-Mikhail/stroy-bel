@@ -101,8 +101,19 @@ class NewsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
 
+            $image = $form->get('image')->getData();
+            if($image) {
+                $imageName = md5(uniqid()) . '.' . $image->guessExtension();
+                $uploads_directory = $this->getParameter('news_uploads_directory');
+                $image->move(
+                    $uploads_directory,
+                    $imageName
+                );
+                $news->setImage("img/news-image/" . $imageName);
+            }
+            $entityManager->flush();
             return $this->redirectToRoute('news_index');
         }
 

@@ -47,6 +47,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.category = ' . $value)
+            ->andWhere('p.isActive = true')
             ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult()

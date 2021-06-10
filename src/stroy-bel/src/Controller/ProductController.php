@@ -74,12 +74,24 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $image = $form->get('image')->getData();
+            if($image) {
+                $imageName = md5(uniqid()) . '.' . $image->guessExtension();
+                $uploads_directory = $this->getParameter('uploads_directory');
+                $image->move(
+                    $uploads_directory,
+                    $imageName
+                );
+                $product->setImage("img/product-image/" . $imageName);
+            }
+            $entityManager->flush();
             return $this->redirectToRoute('product_index');
         }
 
