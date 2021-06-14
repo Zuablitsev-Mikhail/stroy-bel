@@ -106,7 +106,7 @@
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
                                     {% if is_granted('ROLE_ADMIN') %}
-                                        <li><a href="{{ path('admin') }}"><span class="ti-hummer"></span></a></li>
+                                        <li><a href="{{ path('product_index') }}"><span class="ti-hummer"></span></a></li>
                                     {% endif %}
                                     <li><a href="{{ path('app_logout') }}"><span class="ti-agenda"></span></a></li>
                                 {% else %}

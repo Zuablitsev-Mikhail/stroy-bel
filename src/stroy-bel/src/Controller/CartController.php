@@ -15,10 +15,9 @@ class CartController extends AbstractController
      */
     public function index(ProductRepository $productRepository): Response
     {
-        if(isset($_COOKIE['cart'])) {
+        if (isset($_COOKIE['cart'])) {
             $data = json_decode($_COOKIE['cart']);
-        }
-        else{
+        } else {
             $data = "";
         }
         return $this->render('cart/index.html.twig', [
@@ -36,16 +35,16 @@ class CartController extends AbstractController
      */
     public function addToCartAction(int $id, int $quantity = 1): Response
     {
-        if(!isset($_COOKIE['cart'])) setcookie('cart',0, time() + 86400, "/");
+        if (!isset($_COOKIE['cart'])) setcookie('cart', 0, time() + 86400, "/");
         else $cookie = json_decode($_COOKIE['cart']);
-        for($i = 0; $i < $quantity; $i++){
+        for ($i = 0; $i < $quantity; $i++) {
             $cookie[] = intval($id);
         }
-        setcookie('cart',json_encode($cookie), time() + 86400, "/");
+        setcookie('cart', json_encode($cookie), time() + 86400, "/");
         $resData['cntItems'] = count($cookie);
         $resData['success'] = 1;
         echo json_encode($resData);
-        return $this->redirect($this->generateUrl('view')."?id=$id");
+        return $this->redirect($this->generateUrl('view') . "?id=$id");
     }
 
     /**
@@ -56,13 +55,36 @@ class CartController extends AbstractController
     public function removeFromCartAction(int $id): RedirectResponse
     {
         $cookie = [];
-        if(!isset($_COOKIE['cart'])) setcookie('cart',0, time() + 86400, "/");
+        if (!isset($_COOKIE['cart'])) setcookie('cart', 0, time() + 86400, "/");
         else $cookie = json_decode($_COOKIE['cart']);
-        for($i = 0; $i < sizeof($cookie); $i++){
+        for ($i = 0; $i < sizeof($cookie); $i++) {
             if ($cookie[$i] == $id)
                 $cookie[$i] = 0;
         }
-        setcookie('cart',json_encode($cookie), time() + 86400, "/");
+        setcookie('cart', json_encode($cookie), time() + 86400, "/");
+        return $this->redirect($this->generateUrl('cart'));
+    }
+
+    /**
+     * @Route("cart/editCart/{id}/{quantity}", name="editCart")
+     * @param int $id
+     * @param int $quantity
+     * @return RedirectResponse
+     */
+    public function editCartAction(int $id, int $quantity): RedirectResponse
+    {
+        $cookie = [];
+        if (!isset($_COOKIE['cart'])) setcookie('cart', 0, time() + 86400, "/");
+        else $cookie = json_decode($_COOKIE['cart']);
+        for ($i = 0; $i < sizeof($cookie); $i++) {
+            if ($cookie[$i] == $id)
+                $cookie[$i] = 0;
+        }
+        for ($i = 0; $i < $quantity; $i++) {
+            $cookie[] = intval($id);
+        }
+
+        setcookie('cart', json_encode($cookie), time() + 86400, "/");
         return $this->redirect($this->generateUrl('cart'));
     }
 }
