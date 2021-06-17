@@ -24,8 +24,7 @@ class CategoryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->orderBy('c.title', 'ASC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
     // /**
     //  * @return Category[] Returns an array of Category objects

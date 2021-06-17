@@ -18,7 +18,7 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->user = $options['user'];
-        if ($this->user){
+        if ($this->user) {
             $builder
                 ->add('address',
                     EntityType::class,
@@ -28,13 +28,11 @@ class OrderType extends AbstractType
                         'label' => 'Адрес',
                         'query_builder' => function (AddressRepository $er) {
                             return $er->createQueryBuilder('a')
-                                ->where('a.user = '.$this->user);
+                                ->where('a.user = ' . $this->user);
                         },
                     ]
-                )
-            ;
-        }
-        else {
+                );
+        } else {
             $builder
                 ->add('address',
                     EntityType::class,
@@ -43,8 +41,7 @@ class OrderType extends AbstractType
                         'choice_label' => 'address',
                         'label' => 'Адрес',
                     ]
-                )
-            ;
+                );
         }
 
     }

@@ -21,7 +21,7 @@
                     <td>{{ order.date |date('d-M-Y H:i:s') }}</td>
                 </tr>
                 <tr>
-                    <th>Продукты</th>
+                    <th>Товары</th>
                     <td>
                         {% for orderedProduct in order.orderProducts %}
                             <ul class="p-0">{{ orderedProduct.product.title }} x {{ orderedProduct.quantity }} </ul>

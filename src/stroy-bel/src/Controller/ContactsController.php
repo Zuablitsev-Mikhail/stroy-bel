@@ -28,7 +28,7 @@ class ContactsController extends AbstractController
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function sendMail(MailerInterface $mailer):Response
+    public function sendMail(MailerInterface $mailer): Response
     {
         $email = (new Email())
             ->from('noreplystroybel@gmail.com')

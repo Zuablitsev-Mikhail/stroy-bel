@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $image = $form->get('image')->getData();
-            if($image) {
+            if ($image) {
                 $imageName = md5(uniqid()) . '.' . $image->guessExtension();
                 $uploads_directory = $this->getParameter('uploads_directory');
                 $image->move(
@@ -46,7 +47,7 @@ class ProductController extends AbstractController
                 );
                 $product->setImage("img/product-image/" . $imageName);
             }
-            $product->setDate(new \DateTime());
+            $product->setDate(new DateTime());
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -82,7 +83,7 @@ class ProductController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $image = $form->get('image')->getData();
-            if($image) {
+            if ($image) {
                 $imageName = md5(uniqid()) . '.' . $image->guessExtension();
                 $uploads_directory = $this->getParameter('uploads_directory');
                 $image->move(
@@ -106,7 +107,7 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, Product $product): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
             $entityManager->flush();

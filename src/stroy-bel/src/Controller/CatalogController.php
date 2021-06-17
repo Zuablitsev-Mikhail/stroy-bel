@@ -24,19 +24,18 @@ class CatalogController extends AbstractController
     {
         $category = $request->query->get('c');
 
-        if($category !== null){
+        if ($category !== null) {
             $productData = $productRepository->getProductsInCategorySortedByDate($category);
-        }
-        else {
-        $productData = $productRepository->getProductsSortedByDate();
+        } else {
+            $productData = $productRepository->getProductsSortedByDate();
         }
         $page = 1;
 
-        foreach ($productData as $product){
+        foreach ($productData as $product) {
             $productsRating[] = $commentRepository->getRating($product->getId())[0]['rating'] ? $commentRepository->getRating($product->getId())[0]['rating'] : 0;
         }
 
-        if($request->query->get('p') !== null){
+        if ($request->query->get('p') !== null) {
             $page = $request->query->get('p');
         }
 
@@ -53,10 +52,10 @@ class CatalogController extends AbstractController
      */
     public function search(ProductRepository $productRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
-        $productData = $productRepository->getProductsByName((string) $_GET['search']);
+        $productData = $productRepository->getProductsByName((string)$_GET['search']);
         $page = 1;
 
-        if($request->query->get('p') !== null){
+        if ($request->query->get('p') !== null) {
             $page = $request->query->get('p');
         }
 

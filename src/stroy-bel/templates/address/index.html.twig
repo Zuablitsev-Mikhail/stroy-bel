@@ -30,8 +30,8 @@
                 <td>{{ address.city }}</td>
                 <td>{{ address.country }}</td>
                 <td>
-                    <a href="{{ path('address_show', {'id': address.id}) }}">show</a>
-                    <a href="{{ path('address_edit', {'id': address.id}) }}">edit</a>
+                    <a href="{{ path('address_show', {'id': address.id}) }}">Подробнее</a>
+                    <a href="{{ path('address_edit', {'id': address.id}) }}">Редактировать</a>
                 </td>
             </tr>
         {% else %}

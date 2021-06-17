@@ -18,7 +18,7 @@ class CustomerController extends AbstractController
      */
     public function index(Security $security, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
-        $customer =  new User();
+        $customer = new User();
         $customer = $userRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
 
         $orders = $customer->getOrders();

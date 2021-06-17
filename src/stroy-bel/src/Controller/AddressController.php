@@ -38,7 +38,7 @@ class AddressController extends AbstractController
         $form->add('referer', HiddenType::class, [
             'data' => $request->headers->get('referer'),
             "mapped" => false
-    ]);
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -95,7 +95,7 @@ class AddressController extends AbstractController
      */
     public function delete(Request $request, Address $address): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$address->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $address->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($address);
             $entityManager->flush();

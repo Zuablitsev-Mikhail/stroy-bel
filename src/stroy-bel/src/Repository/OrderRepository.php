@@ -27,8 +27,7 @@ class OrderRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->orderBy('o.date', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
     // /**
     //  * @return Order[] Returns an array of Order objects

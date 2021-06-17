@@ -19,8 +19,8 @@ class ProductViewController extends AbstractController
     public function index(ProductRepository $productRepository, CommentRepository $commentRepository): Response
     {
         $rating = 0;
-        if($commentRepository->getRating($_GET['id'])[0]['rating']){
-           $rating = $commentRepository->getRating($_GET['id'])[0]['rating'];
+        if ($commentRepository->getRating($_GET['id'])[0]['rating']) {
+            $rating = $commentRepository->getRating($_GET['id'])[0]['rating'];
         }
         return $this->render('product_view/index.html.twig', [
             'controller_name' => 'ProductViewController',

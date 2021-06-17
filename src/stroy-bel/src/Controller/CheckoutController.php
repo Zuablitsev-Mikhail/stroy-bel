@@ -4,15 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\OrderProduct;
-use App\Entity\User;
 use App\Form\OrderType;
-use App\Repository\OrderProductRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
 class CheckoutController extends AbstractController
@@ -35,21 +34,20 @@ class CheckoutController extends AbstractController
 
             $order->setUser($user);
             $order->setStatus("Заказан");
-            $order->setDate(new \DateTime());
+            $order->setDate(new DateTime());
 
             $entityManager->persist($order);
             $entityManager->flush();
 
-            if(!isset($_COOKIE['cart'])) {
-                setcookie('cart',"", time() + 86400, "/");
-            }
-            else {
+            if (!isset($_COOKIE['cart'])) {
+                setcookie('cart', "", time() + 86400, "/");
+            } else {
                 $cookie = json_decode($_COOKIE['cart']);
             }
 
             $orderedProducts = array_count_values($cookie);
-            foreach ($orderedProducts as $productId=>$quantity) {
-                if($productId != 0) {
+            foreach ($orderedProducts as $productId => $quantity) {
+                if ($productId != 0) {
                     $orderedProduct = new OrderProduct();
                     $orderedProduct->setProduct($productRepository->findOneBy(['id' => $productId]));
                     $orderedProduct->setOrder($order);
@@ -58,18 +56,19 @@ class CheckoutController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            setcookie('cart',"", time() + 86400, "/");
+            setcookie('cart', "", time() + 86400, "/");
             return $this->redirectToRoute('checkout_success');
         }
 
-        if(isset($_COOKIE['cart'])) {
+        $productListInCart = [];
+
+        if (isset($_COOKIE['cart'])) {
             $productListInCart = json_decode($_COOKIE['cart']);
+
         }
 
-        $productsInCart = $productRepository->findBy(['id' => $productListInCart]);
-
-        foreach ($productsInCart as $product){
-            $coast += $product->getPrice();
+        foreach ($productListInCart as $product) {
+            $coast += $productRepository->findOneBy(['id' => $product])->getPrice();
         }
         return $this->render('checkout/index.html.twig', [
             'order' => $order,
@@ -77,6 +76,7 @@ class CheckoutController extends AbstractController
             'coast' => $coast
         ]);
     }
+
     /**
      * @Route("/success", name="checkout_success")
      */

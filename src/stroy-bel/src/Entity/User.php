@@ -86,7 +86,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -96,8 +96,8 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        if($this->roles[0] == self::ROLE_USER) $roles[0] = 'ROLE_USER';
-        if($this->roles[0] == self::ROLE_ADMIN) $roles[0] = 'ROLE_ADMIN';
+        if ($this->roles[0] == self::ROLE_USER) $roles[0] = 'ROLE_USER';
+        if ($this->roles[0] == self::ROLE_ADMIN) $roles[0] = 'ROLE_ADMIN';
 
         return array_unique($roles);
     }
@@ -114,7 +114,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self

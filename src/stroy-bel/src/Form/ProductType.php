@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Product;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -47,8 +48,8 @@ class ProductType extends AbstractType
                 'required' => false,
                 'attr' => array('accept' => 'image/jpeg,image/png')
             ])
-            ->add('category', EntityType::class, ['label' => 'category', 'class' => Category::class, 'choice_label' => 'title'])
-            ->add('isActive');
+            ->add('category', EntityType::class, ['label' => 'категория', 'class' => Category::class, 'choice_label' => 'title'])
+            ->add('isActive', CheckboxType::class, ['label' => 'Активен?: ']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

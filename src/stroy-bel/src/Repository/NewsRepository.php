@@ -31,8 +31,7 @@ class NewsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('n')
             ->orderBy('n.date', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**
@@ -44,8 +43,7 @@ class NewsRepository extends ServiceEntityRepository
             ->orderBy('n.date', 'DESC')
             ->setMaxResults(3)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
     // /**
     //  * @return News[] Returns an array of News objects

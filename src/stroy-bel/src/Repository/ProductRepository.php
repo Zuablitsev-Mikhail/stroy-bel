@@ -27,8 +27,7 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->orderBy('p.date', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**
@@ -40,9 +39,9 @@ class ProductRepository extends ServiceEntityRepository
             ->orderBy('p.date', 'DESC')
             ->setMaxResults(12)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
+
     public function getProductsInCategorySortedByDate($value)
     {
         return $this->createQueryBuilder('p')
@@ -50,17 +49,15 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.isActive = true')
             ->orderBy('p.date', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function getProductsByName($value)
     {
         return $this->createQueryBuilder('p')
-            ->where('p.title like '. '\'%'.$value.'%\'')
+            ->where('p.title like ' . '\'%' . $value . '%\'')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     // /**

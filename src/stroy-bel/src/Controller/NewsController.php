@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +37,7 @@ class NewsController extends AbstractController
             'news' => $newsRepository->getNewsListSortedByDate(),
         ]);
     }
+
     /**
      * @Route("/admin/new", name="news_new", methods={"GET","POST"})
      */
@@ -48,7 +50,7 @@ class NewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $image = $form->get('image')->getData();
-            if($image) {
+            if ($image) {
                 $imageName = md5(uniqid()) . '.' . $image->guessExtension();
                 $uploads_directory = $this->getParameter('news_uploads_directory');
                 $image->move(
@@ -56,11 +58,10 @@ class NewsController extends AbstractController
                     $imageName
                 );
                 $news->setImage("img/news-image/" . $imageName);
-            }
-            else {
+            } else {
                 $news->setImage("img/default/default.jpg");
             }
-            $news->setDate(new \DateTime());
+            $news->setDate(new DateTime());
             $entityManager->persist($news);
             $entityManager->flush();
 
@@ -82,6 +83,7 @@ class NewsController extends AbstractController
             'news' => $news,
         ]);
     }
+
     /**
      * @Route("/admin/{id}", name="admin_news_show", methods={"GET"})
      */
@@ -104,7 +106,7 @@ class NewsController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
 
             $image = $form->get('image')->getData();
-            if($image) {
+            if ($image) {
                 $imageName = md5(uniqid()) . '.' . $image->guessExtension();
                 $uploads_directory = $this->getParameter('news_uploads_directory');
                 $image->move(
@@ -128,7 +130,7 @@ class NewsController extends AbstractController
      */
     public function delete(Request $request, News $news): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$news->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $news->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($news);
             $entityManager->flush();

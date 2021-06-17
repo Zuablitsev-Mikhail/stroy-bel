@@ -9,6 +9,7 @@ use App\Form\ProductType;
 use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +45,7 @@ class CommentController extends AbstractController
 
         $comment->setUser($userRepository->findOneBy(['email' => $security->getUser()->getUsername()]));
         $comment->setProduct($product);
-        $comment->setDate(new \DateTime());
+        $comment->setDate(new DateTime());
         $comment->setBody($request->query->get('body'));
         $comment->setRating((int)$request->query->get('rating'));
         $entityManager->persist($comment);

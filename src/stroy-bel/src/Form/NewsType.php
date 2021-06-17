@@ -28,9 +28,9 @@ class NewsType extends AbstractType
                 'required' => false,
             ])
             ->add('body', TextareaType::class, [
+                'label' => 'Текст',
                 'attr' => ['class' => 'textarea']
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

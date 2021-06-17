@@ -32,8 +32,7 @@ class AddressType extends AbstractType
             ->add('country',
                 null,
                 ['label' => "Страна"]
-            )
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

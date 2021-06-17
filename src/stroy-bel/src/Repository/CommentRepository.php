@@ -22,21 +22,19 @@ class CommentRepository extends ServiceEntityRepository
     public function getSortedCommentsByDate($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.product = '.$value)
+            ->andWhere('c.product = ' . $value)
             ->orderBy('c.date', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function getRating($value)
     {
         return $this->createQueryBuilder('c')
             ->select("avg(c.rating) as rating")
-            ->andWhere('c.product = '.$value)
+            ->andWhere('c.product = ' . $value)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
     // /**
     //  * @return Comment[] Returns an array of Comment objects
