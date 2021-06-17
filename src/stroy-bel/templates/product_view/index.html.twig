@@ -39,7 +39,7 @@
                                 <li>{{ products.price }} BYN</li>
                             </ul>
                             <div class="product-action-wrap">
-                                <div class="prodict-statas"><span>Колличество :</span></div>
+                                <div class="prodict-statas"><span>Количество :</span></div>
                                 <div class="product-quantity">
                                     <form id='myform' method='POST' action='#'>
                                         <div class="product-quantity">
@@ -110,9 +110,9 @@
                                 <!-- Start Single Review -->
                                 {% for comment in comments %}
                                 <div class="pro__review my-5">
-                                    <div class="review__thumb">
-                                        <img src="images/review/1.jpg" alt="review images">
-                                    </div>
+{#                                    <div class="review__thumb">#}
+{#                                        <img src="images/review/1.jpg" alt="review images">#}
+{#                                    </div>#}
                                     <div class="review__details">
                                         <div class="review__info">
                                             <h4><a href="#">{{ comment.user.email }}</a></h4>
