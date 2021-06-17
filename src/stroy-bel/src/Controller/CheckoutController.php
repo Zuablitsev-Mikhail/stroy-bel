@@ -68,7 +68,9 @@ class CheckoutController extends AbstractController
         }
 
         foreach ($productListInCart as $product) {
-            $coast += $productRepository->findOneBy(['id' => $product])->getPrice();
+            if ($product !== 0) {
+                $coast += $productRepository->findOneBy(['id' => $product])->getPrice();
+            }
         }
         return $this->render('checkout/index.html.twig', [
             'order' => $order,
