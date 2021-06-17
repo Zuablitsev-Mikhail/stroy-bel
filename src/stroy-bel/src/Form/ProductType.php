@@ -49,7 +49,7 @@ class ProductType extends AbstractType
                 'attr' => array('accept' => 'image/jpeg,image/png')
             ])
             ->add('category', EntityType::class, ['label' => 'категория', 'class' => Category::class, 'choice_label' => 'title'])
-            ->add('isActive', CheckboxType::class, ['label' => 'Активен?: ']);
+            ->add('isActive', CheckboxType::class, ['label' => 'Активен?']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
