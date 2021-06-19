@@ -91,4 +91,21 @@ class CategoryController extends AbstractController
 
         return $this->redirectToRoute('category_index');
     }
+
+    /**
+     * @Route("/change/{id}", name="category_change", methods={"Get"})
+     */
+    public function changeStatus(Request $request, Category $category): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($category->getIsActive()) {
+            $category->setIsActive(false);
+        } else {
+            $category->setIsActive(true);
+        }
+        $entityManager->flush();
+
+        return $this->redirectToRoute('category_index');
+    }
 }

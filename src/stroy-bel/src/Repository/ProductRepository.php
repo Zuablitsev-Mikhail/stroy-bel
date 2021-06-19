@@ -25,6 +25,9 @@ class ProductRepository extends ServiceEntityRepository
     public function getProductsSortedByDate()
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
+            ->andWhere('c.isActive = true')
+            ->andWhere('p.isActive = true')
             ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult();
@@ -36,6 +39,9 @@ class ProductRepository extends ServiceEntityRepository
     public function getAFewProductsSortedByDate()
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
+            ->andWhere('c.isActive = true')
+            ->andWhere('p.isActive = true')
             ->orderBy('p.date', 'DESC')
             ->setMaxResults(12)
             ->getQuery()
@@ -45,6 +51,8 @@ class ProductRepository extends ServiceEntityRepository
     public function getProductsInCategorySortedByDate($value)
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
+            ->andWhere('c.isActive = true')
             ->where('p.category = ' . $value)
             ->andWhere('p.isActive = true')
             ->orderBy('p.date', 'DESC')
@@ -55,37 +63,11 @@ class ProductRepository extends ServiceEntityRepository
     public function getProductsByName($value)
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.category', 'c')
             ->where('p.title like ' . '\'%' . $value . '%\'')
+            ->andWhere('c.isActive = true')
+            ->andWhere('p.isActive = true')
             ->getQuery()
             ->getResult();
     }
-
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Product
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

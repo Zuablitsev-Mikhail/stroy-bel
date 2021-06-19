@@ -24,7 +24,7 @@
                 <td>{{ news.title }}</td>
                 <td>{{ news.date ? news.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td><img src="../../{{ news.image }}" alt="Новость" class="w-300p"></td>
-                <td>{{ news.body }}</td>
+                <td>{{ news.body | raw }}</td>
                 <td>
                     <a href="{{ path('news_show', {'id': news.id}) }}">Подробнее</a>
                     <br>

@@ -13,6 +13,7 @@
                 <th>Название</th>
                 <th>Описание</th>
                 <th>Длинное описание</th>
+                <th>Статус</th>
                 <th>Дата</th>
                 <th>Изображение</th>
                 <th>Действия</th>
@@ -25,12 +26,24 @@
                 <td>{{ product.title }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.LongDescription }}</td>
+                {% if product.isActive%}
+                <td class="text-success">Активен</td>
+                {% else %}
+                    <td class="text-danger">Выключен</td>
+                {% endif %}
                 <td>{{ product.date ? product.date|date('Y-m-d') : '' }}</td>
                 <td><img src="../{{ product.image }}" alt="product" class="w-100"></td>
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">Подробнее</a>
                     <br>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">Редактировать</a>
+                    <br>
+
+                    {% if product.isActive%}
+                        <a href="{{ path('product_change', {'id': product.id}) }}" class="text-danger">Выключить</a>
+                    {% else %}
+                        <a href="{{ path('product_change', {'id': product.id}) }}" class="text-success">Включить</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

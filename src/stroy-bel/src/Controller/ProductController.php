@@ -115,4 +115,21 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('product_index');
     }
+
+    /**
+     * @Route("/change/{id}", name="product_change", methods={"Get"})
+     */
+    public function changeStatus(Request $request, Product $product): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($product->getIsActive()) {
+            $product->setIsActive(false);
+        } else {
+            $product->setIsActive(true);
+        }
+        $entityManager->flush();
+
+        return $this->redirectToRoute('product_index');
+    }
 }
