@@ -21,7 +21,6 @@ class CustomerController extends AbstractController
         $customer = new User();
         $customer = $userRepository->findOneBy(['email' => $this->getUser()->getUsername()]);
 
-        $orders = $customer->getOrders();
         $addresses = $customer->getAddresses();
 
         $orders = $customer->getOrders();
